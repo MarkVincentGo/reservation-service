@@ -1,0 +1,77 @@
+
+Postgres:
+
+ CREATE TABLE "restaurants" (
+	"id" integer NOT NULL UNIQUE,
+	"name" VARCHAR (50) NOT NULL,
+	"monday_start" VARCHAR (50),
+	"monday_end" VARCHAR (50),
+	"tuesday_start" VARCHAR (50) NOT NULL,
+	"tuesday_end" VARCHAR (50) NOT NULL,
+	"wednesday_start" VARCHAR (50) NOT NULL,
+	"wednesday_end" VARCHAR (50) NOT NULL,
+	"thursday_start" VARCHAR (50) NOT NULL,
+	"thursday_end" VARCHAR (50) NOT NULL,
+	"friday_start" VARCHAR (50) NOT NULL,
+	"friday_end" VARCHAR (50) NOT NULL,
+	"saturday_start" VARCHAR (50) NOT NULL,
+	"saturday_end" VARCHAR (50) NOT NULL,
+	"sunday_start" VARCHAR (50),
+	"sunday_end" VARCHAR (50),
+	"reservation_allowed" BOOLEAN NOT NULL,
+	"max_number" integer NOT NULL,
+	"min_number" integer NOT NULL,
+	"reservation_duration" integer NOT NULL,
+	"allowed_months_ahead" integer NOT NULL,
+	"1_seat_count" integer NOT NULL,
+	"2_seat_count" integer NOT NULL,
+	"3_seat_count" integer NOT NULL,
+	"4_seat_count" integer NOT NULL,
+	"5_seat_count" integer NOT NULL,
+	"6_seat_count" integer NOT NULL,
+	"7_seat_count" integer NOT NULL,
+	"8_seat_count" integer NOT NULL,
+	"9_seat_count" integer NOT NULL,
+	"10_seat_count" integer NOT NULL,
+	"11_seat_count" integer NOT NULL,
+	"12_seat_count" integer NOT NULL,
+	"13_seat_count" integer NOT NULL,
+	"14_seat_count" integer NOT NULL,
+	"15_seat_count" integer NOT NULL,
+	CONSTRAINT "restaurants_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "reservations" (
+	"id" integer NOT NULL UNIQUE,
+	"restaurant_id" integer NOT NULL,
+	"date" DATE NOT NULL,
+	"start_time" TIME NOT NULL,
+	"end_time" TIME NOT NULL,
+	"time1" TIME NOT NULL,
+  "time2" TIME NOT NULL,
+	"time3" TIME NOT NULL,
+	"time4" TIME NOT NULL,
+	"time5" TIME,
+	"time6" TIME,
+	"time7" TIME,
+	"time8" TIME,
+	"number_people" integer NOT NULL,
+	"first name" VARCHAR (50)  NOT NULL,
+	"last name" VARCHAR (50)  NOT NULL,
+	"email" VARCHAR (50)  NOT NULL,
+	"phone_number" VARCHAR (50)  NOT NULL,
+	"notes" VARCHAR (255)  NOT NULL,
+	CONSTRAINT "reservations_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+
+ALTER TABLE "reservations" ADD CONSTRAINT "reservations_fk0" FOREIGN KEY ("time") REFERENCES ""("");
+ALTER TABLE "reservations" ADD CONSTRAINT "reservations_fk1" FOREIGN KEY ("restaurant_id") REFERENCES "restaurants"("id");

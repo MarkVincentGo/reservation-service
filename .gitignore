@@ -22,3 +22,9 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
+
+report.20200215.141408.91546.0.001.json
+reservationsTest.csv
+reservationsTestCassandra.csv
+restaurantsTest.csv
+restaurantsTestCassandra.csv

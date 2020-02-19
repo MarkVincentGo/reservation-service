@@ -131,10 +131,4 @@ function writeOneHundredReservations(writer, encoding, callback, restaurantId = 
   write();
 }
 
-writeOneHundredReservations(
-  write, 'utf-8', () => {
-    write.end();
-  },
-);
-
 module.exports = writeOneHundredReservations;

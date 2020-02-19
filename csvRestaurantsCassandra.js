@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const fs = require('graceful-fs');
 const faker = require('faker');
 const makeOneHundredReservations = require('./csvReservationsCassandra.js');
@@ -25,7 +26,7 @@ const write = fs.createWriteStream('./restaurantsTestCassandra.csv');
 write.setMaxListeners(1000);
 
 const reserveWrite = fs.createWriteStream('./reservationsTestCassandra.csv', { flags: 'a', emitClose: true });
-reserveWrite.write('restaurant_name,monday_start,monday_end,tuesday_start,tuesday_end,wednesday_start,wednesday_end,thursday_start,thursday_end,friday_start,friday_end,saturday_start,saturday_end,sunday_start,sunday_end,reservation_allowed,max_number,min_number,reservation_duration,allowed_months_ahead,1_seat_count,2_seat_count,3_seat_count,4_seat_count,5_seat_count,6_seat_count,7_seat_count,8_seat_count,9_seat_count,10_seat_count,11_seat_count,12_seat_count,13_seat_count,14_seat_count,15_seat_count\n')
+reserveWrite.write('restaurant_name,monday_start,monday_end,tuesday_start,tuesday_end,wednesday_start,wednesday_end,thursday_start,thursday_end,friday_start,friday_end,saturday_start,saturday_end,sunday_start,sunday_end,reservation_allowed,max_number,min_number,reservation_duration,allowed_months_ahead,1_seat_count,2_seat_count,3_seat_count,4_seat_count,5_seat_count,6_seat_count,7_seat_count,8_seat_count,9_seat_count,10_seat_count,11_seat_count,12_seat_count,13_seat_count,14_seat_count,15_seat_count\n');
 reserveWrite.setMaxListeners(5000);
 
 function writeTenMillionRestaurants(writer, encoding, callback) {
