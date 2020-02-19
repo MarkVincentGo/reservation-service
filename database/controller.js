@@ -7,8 +7,6 @@ module.exports.controller = {
 
     getAllReservations: (req, res) => {
       // get all reservations (possibly for businessowners)
-      const { name } = req.params;
-      
     },
 
     getOneReservation: (req, res) => {
@@ -37,26 +35,8 @@ module.exports.controller = {
       // update restautant data with id as parameter
     },
 
-    deleteRestaurant: (req,res) => {
+    deleteRestaurant: (req, res) => {
       // delete restautant data with id parameter
     },
   },
-
-  users: {
-    addUser: (req, res) => {
-      // add a user
-    },
-
-    findUser: (req, res) => {
-      // get a user from database with UserId as parameter
-    },
-
-    updateUser: (req, res) => {
-      // update user data with UserId as parameter
-    },
-
-    deleteUser: (req, res) => {
-      // delete user data with UserId as parameter
-    }
-  }
 };

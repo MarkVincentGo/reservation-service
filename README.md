@@ -42,7 +42,23 @@ npm install
 #### `GET` /restaurant/:restaurantId 
   * returns one restaurant's data using unique restaurant id as parameter
   * URL Params: restaurantId=`[integer]`
-   `req.body: none`
+  `req.body: none`
+  ```
+  response.data: {
+    name: [string]
+    [dayOfWeek]_start: [time]
+    [dayOfWeek]_end: [time]
+    reservation_allowed: [boolean]
+    max_number_reservations: [integer]
+    min_number_reservations: [integer]
+    user_reservation_limit: [integer]
+    reservation_duration: [interger]
+    allowed_months_ahead: [integer]
+    [number]_seat_table: [integer]  
+  }
+  ```
+  * `[dayOfWeek]` refers to any weekday, lowercase, eg: `monday`, `sunday`
+  * `[number]` refers integers 1 - 15
 
 #### `POST` /restaurant 
   * adds new restaurant data to database
@@ -93,7 +109,7 @@ npm install
   * URL Params: reservationId=`[integer]`
    `req.body: none`
 
-#### `GET` /manyReservations/:restaurantId 
+#### `GET` /restaurant/:restaurantId/allReservations
   * for the restaurant owner side, obtain a list of all the reservations for the   restaurant with perhaps an option of selecting by date in req.body
   * URL Params: restaurantId=`[integer]`
 
@@ -110,16 +126,19 @@ npm install
   * all req.body data optional to filter out search
   * no req.body data defaults to all set reservations
 
-#### `POST` /reservation/:restaurantId 
+#### `POST` /restaurant/:restaurantId/reservation
   * add reservation to database
   * URL Params: restaurantId=`[integer]`
   ```
   req.body: {
-    userId: [integer]
+    firstName: [string]
+    lastName: [string]
+    email: [string]
+    phoneNumber: [string]
     number_of_people: [integer]
     date: [date]
     time: [time]
-    special_accomodations: [string]
+    notes: [string]
   }
   ```
   * all req.body data required
@@ -140,43 +159,4 @@ npm install
 #### `DELETE` /reservation/:reservationId 
   * deletes reservation data according to unique reservation id
   * URL Params: reservationId=`[integer]`
-   `req.body: none`
-
-
-### user specific routes
-####  `GET` /user/:userId
-  * find user from database
-  * URL Params: userId=`[string]`
-   `req.body: none`
-
-####  `POST` /user
-  * add user to database
-  ```
-  req.body: {
-    user_name: [string]
-    first_name: [string]
-    last_name: [string]
-    phone_number: [string]
-    email: [string]
-  }
-  ```
-  * all req.body data required
-
-####  `PUT` /user/:userId
-  * update user data from database
-  * URL Params: userId=`[string]`
-  ```
-  req.body: {
-    user_name: [string]
-    first_name: [string]
-    last_name: [string]
-    phone_number: [string]
-    email: [string]
-  }
-  ```
-  * all req.body data optional depending on what data to change from user
-
-####  `DELETE` /user/:userId
-  * delete user from database
-  * URL Params: userId=`[string]`
    `req.body: none`

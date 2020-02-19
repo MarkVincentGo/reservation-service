@@ -42,19 +42,19 @@ app.get('/reservations/', (req, res) => {
 // RESERVATION DATA
 
 // create
-app.post('/reservation/:restaurantId', controller.reservations.addReservation);
+app.post('/restaurant/:restaurantId/reservation', controller.reservations.addReservation);
 
 // read All
-app.get('/allReservations/:restaurantId', controller.reservations.getAllReservations);
+app.get('/restaurant/:restaurantId/allReservations', controller.reservations.getAllReservations);
 
 // read one reservation
-app.get('/reservation/:id', controller.reservations.getOneReservation);
+app.get('/reservation/:reservationId', controller.reservations.getOneReservation);
 
 // update
-app.put('/reservations/:id', controller.reservations.updateReservation);
+app.put('/reservation/:reservationId', controller.reservations.updateReservation);
 
 // delete
-app.delete('/reservations/:id', controller.reservations.deleteReservation);
+app.delete('/reservation/:reservationId', controller.reservations.deleteReservation);
 
 
 // GENERAL RESTAURANT DATA
@@ -63,17 +63,10 @@ app.delete('/reservations/:id', controller.reservations.deleteReservation);
 app.post('/restaurant', controller.restaurants.addRestaurant);
 
 // read
-app.get('/restaurant/:id', controller.restaurants.getRestaurant);
+app.get('/restaurant/:restaurantId', controller.restaurants.getRestaurant);
 
 // update
-app.put('/restaurant/:id', controller.restaurants.updateRestaurant);
+app.put('/restaurant/:restaurantId', controller.restaurants.updateRestaurant);
 
 // delete
-app.delete('/restaurant/:id', controller.restaurants.deleteRestaurant);
-
-
-// USER DATA
-app.post('/reservation/user', controller.users.addUser);
-app.get('/reservation/user/:userId', controller.users.findUser);
-app.put('/reservation/user/:userId', controller.users.updateUser);
-app.delete('/reservation/user/:userId', controller.users.deleteUser);
+app.delete('/restaurant/:restaurantId', controller.restaurants.deleteRestaurant);
