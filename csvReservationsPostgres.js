@@ -42,12 +42,28 @@ const GaussianRandom = () => {
 // to prevent reservationId from restarting, declare it in outer scope.
 let id = 0;
 const write = fs.createWriteStream('./reservationsTest.csv');
-write.write('id,restaurant_id,date,start_time, end_time,time1,time2,time3,time4,time5,time6,time7,time8,number_people,first_name,last_name,email,phone_number,notes\n', 'utf8');
+// write.write('id,restaurant_id,date,start_time, end_time,time1,time2,time3,time4,time5,time6,time7,time8,number_people,first_name,last_name,email,phone_number,notes\n', 'utf8');
 
 // default parameters to ensure no undefined arguments pass into the function
-function writeOneHundredReservations(writer, encoding, callback, restaurantId = 1, openTime = '13:00', closeTime = '17:00', maxNumber = 4, minNumber = 8, resLimit = 90, monthsAhead = 3) {
-  // Blindly assuming 5-20 reservations each restaurant
-  let i = Math.random() * 15 + 5;
+function writeOneHundredReservations(writer, encoding, callback, restaurantId = 1, openTime = '13:00', closeTime = '17:00', maxNumber = 4, minNumber = 8, resLimit = 90, monthsAhead = 3, seatCounts = {
+  one_seat_count: 15,
+  two_seat_count: 10,
+  three_seat_count: 10,
+  four_seat_count: 10,
+  five_seat_count: 5,
+  six_seat_count: 5,
+  seven_seat_count: 0,
+  eight_seat_count: 2,
+  nine_seat_count: 0,
+  ten_seat_count: 2,
+  eleven_seat_count: 2,
+  twelve_seat_count: 1,
+  thirteen_seat_count: 0,
+  fourteen_seat_count: 0,
+  fifteen_seat_count: 2,
+}) {
+  // Blindly assuming 8-20 reservations each restaurant
+  let i = Math.random() * 12 + 8;
 
   // restrict possible hours to be specific to restaurant
   const openIndex = possibleTimeslots.indexOf(openTime);
@@ -64,23 +80,15 @@ function writeOneHundredReservations(writer, encoding, callback, restaurantId = 
       // this block is tricky. Reserve next 4/6/8 timeslots depending on reservation limit. This block sets the times of one reservation.
       let randomTimeIndex = Math.floor(Math.random() * restaurantReservationHours.length - 8);
       if (randomTimeIndex < 0) { randomTimeIndex = Math.floor(Math.random() * 8); }
-      const randomTimeIndex2 = randomTimeIndex + 1;
-      const randomTimeIndex3 = randomTimeIndex + 2;
-      const randomTimeIndex4 = randomTimeIndex + 3;
-      const randomTimeIndex5 = randomTimeIndex + 4;
-      const randomTimeIndex6 = randomTimeIndex + 5;
-      const randomTimeIndex7 = randomTimeIndex + 6;
-      const randomTimeIndex8 = randomTimeIndex + 7;
+      const randomTimeIndex60 = randomTimeIndex + 4;
+      const randomTimeIndex90 = randomTimeIndex + 6;
+      const randomTimeIndex120 = randomTimeIndex + 8;
       // reserve
       const time = restaurantReservationHours[randomTimeIndex];
-      const time2 = restaurantReservationHours[randomTimeIndex2];
-      const time3 = restaurantReservationHours[randomTimeIndex3];
-      const time4 = restaurantReservationHours[randomTimeIndex4];
-      const time5 = restaurantReservationHours[randomTimeIndex5];
-      const time6 = restaurantReservationHours[randomTimeIndex6];
-      const time7 = restaurantReservationHours[randomTimeIndex7];
-      const time8 = restaurantReservationHours[randomTimeIndex8];
-      const timeArr = [time, time2, time3, time4, time5, time6, time7, time8];
+      const time60 = restaurantReservationHours[randomTimeIndex60];
+      const time90 = restaurantReservationHours[randomTimeIndex90];
+      const time120 = restaurantReservationHours[randomTimeIndex120];
+      const timeArr = [time, time60, time90, time120];
 
       // Gaussian distribution makes reservations of 5 to 7 people more likely
       const randomNumPeople = GaussianRandom();
@@ -94,11 +102,14 @@ function writeOneHundredReservations(writer, encoding, callback, restaurantId = 
         date = `2020-0${Math.floor(Math.random() * monthsAhead + new Date().getMonth() + 1)}-${dayOfMonth}`;
       }
       // in the case the GaussianRandom number is below the restaurant min number for reservation or greater than max, just reassign it to max number.
-      const numberPeople = randomNumPeople > maxNumber || randomNumPeople < minNumber ? maxNumber : randomNumPeople;
+      let numberPeople = randomNumPeople > maxNumber || randomNumPeople < minNumber ? maxNumber : randomNumPeople;
+      if (numberPeople > seatCounts[`${numberPeople}_seat_count`]) {
+        numberPeople = ([1, 2, 4])[Math.floor(Math.random() * 3)];
+      }
       const firstName = faker.name.firstName();
       const lastName = faker.name.lastName();
       const startTime = timeArr[0];
-      const endTime = timeArr[resLimit / 15 - 1];
+      const endTime = timeArr[resLimit / 30 - 1];
       const email = `${firstName.toLowerCase()}${lastName.toLowerCase()}${getRandomElement(emailDomains)}`;
       const phoneNumber = faker.phone.phoneNumberFormat(1);
       const notes = faker.lorem.sentence();
@@ -106,11 +117,11 @@ function writeOneHundredReservations(writer, encoding, callback, restaurantId = 
       // logging timeslots the reservations covers
       let data;
       if (resLimit === 60) {
-        data = `${id},${restaurantId},${date},${startTime},${endTime},${startTime},${time2},${time3},${endTime},${''},${''},${''},${''},${numberPeople},${firstName},${lastName},${email},${phoneNumber},${notes}\n`;
+        data = `${restaurantId},${date},${startTime},${endTime},${numberPeople},${firstName},${lastName},${email},${phoneNumber},${notes}\n`;
       } else if (resLimit === 90) {
-        data = `${id},${restaurantId},${date},${startTime},${endTime},${startTime},${time2},${time3},${time4},${time5},${endTime},${''},${''},${numberPeople},${firstName},${lastName},${email},${phoneNumber},${notes}\n`;
+        data = `${restaurantId},${date},${startTime},${endTime},${numberPeople},${firstName},${lastName},${email},${phoneNumber},${notes}\n`;
       } else {
-        data = `${id},${restaurantId},${date},${startTime},${endTime},${startTime},${time2},${time3},${time4},${time5},${time6},${time7},${endTime},${numberPeople},${firstName},${lastName},${email},${phoneNumber},${notes}\n`;
+        data = `${restaurantId},${date},${startTime},${endTime},${numberPeople},${firstName},${lastName},${email},${phoneNumber},${notes}\n`;
       }
 
 
