@@ -28,3 +28,5 @@ reservationsTest.csv
 reservationsTestCassandra.csv
 restaurantsTest.csv
 restaurantsTestCassandra.csv
+
+.env

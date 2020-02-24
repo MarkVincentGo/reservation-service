@@ -51,10 +51,9 @@ npm install
     reservation_allowed: [boolean]
     max_number_reservations: [integer]
     min_number_reservations: [integer]
-    user_reservation_limit: [integer]
     reservation_duration: [interger]
     allowed_months_ahead: [integer]
-    [number]_seat_table: [integer]  
+    [number]_seat_count: [integer]  
   }
   ```
   * `[dayOfWeek]` refers to any weekday, lowercase, eg: `monday`, `sunday`
@@ -70,14 +69,13 @@ npm install
     reservation_allowed: [boolean]
     max_number_reservations: [integer]
     min_number_reservations: [integer]
-    user_reservation_limit: [integer]
     reservation_duration: [interger]
     allowed_months_ahead: [integer]
-    [number]_seat_table: [integer]  
+    [number]_seat_count: [integer]  
   }
   ```
   * `[dayOfWeek]` refers to any weekday, lowercase, eg: `monday`, `sunday`
-  * `[number]` refers to any integer 1 - 15
+  * `[integer]` refers to any integer 1 - 15
   * all req.body data required
 #### `PUT` /restaurant/:restaurantId 
   * updates restaurant data according to unique restaurant id
@@ -90,10 +88,9 @@ npm install
     reservation_allowed: [boolean]
     max_number_reservations: [integer]
     min_number_reservations: [integer]
-    user_reservation_limit: [integer]
     reservation_duration: [interger]
     allowed_months_ahead: [integer]
-    [number]_seat_table: [integer]  
+    [number]_seat_count: [integer]  
     }
   ```
   * all req.body data optional depending on what data to change from restaurant
@@ -104,7 +101,19 @@ npm install
 
 
 ### reservation specific routes
-####  `GET` /reservation/:reservationId 
+#### `GET` /restaurant/:restaurantId/availableReservations
+  * returns an array of available reservations
+  * URL Params: restaurantId=`[integer]`
+  ```
+     req.body: {
+       time: [time],
+       numberOfPeople: [integer],
+       date: [date];
+     }
+  ```
+  * all req.body data required
+
+####  `GET` /restaurant/:restaurantId/reservations/:reservationId 
   * returns one reservation from the database, requires reservation id
   * URL Params: reservationId=`[integer]`
    `req.body: none`
@@ -135,7 +144,7 @@ npm install
     lastName: [string]
     email: [string]
     phoneNumber: [string]
-    number_of_people: [integer]
+    numberOfPeople: [integer]
     date: [date]
     time: [time]
     notes: [string]

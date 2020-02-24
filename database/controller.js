@@ -83,7 +83,7 @@ module.exports.controller = {
           (${restaurantId},'${firstName}','${lastName}','${email}','${phoneNumber}',${numberOfPeople},'${date}','${time}', '${changeTimeInterval(time, resLimit / 15)}','${notes}')`;
           return dbHandlerProm(insertReservationQuery);
         })
-        .then(console.log('done'));
+        .then(() => res.end());
     },
 
     getAllReservations: (req, res) => {
