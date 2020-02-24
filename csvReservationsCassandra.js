@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-const fs = require('graceful-fs');
 const faker = require('faker');
 
 
@@ -41,7 +40,6 @@ const GaussianRandom = () => {
 
 // to prevent reservationId from restarting, declare it in outer scope.
 let id = 0;
-const write = fs.createWriteStream('./reservationsTestCassandra.csv');
 // write.write('id,restaurant_id,date,start_time, end_time,time1,time2,time3,time4,time5,time6,time7,time8,number_people,first_name,last_name,email,phone_number,notes\n', 'utf8');
 
 // default parameters to ensure no undefined arguments pass into the function
@@ -71,7 +69,7 @@ function writeOneHundredReservations(writer, encoding, callback, openTime = '13:
         } else {
           date = `2020-0${Math.floor(Math.random() * monthsAhead + new Date().getMonth() + 1)}-${dayOfMonth}`;
         }
-        data = restaurantData.concat(`,${''},${date},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''}\n`)
+        data = restaurantData.concat(`,${''},${date},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''},${''}\n`);
         i -= 1;
       } else {
         id += 1;
