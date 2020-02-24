@@ -1,11 +1,17 @@
+require('newrelic');
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
 const db = require('../database/index.js');
 
 const app = express();
-const port = 3002;
+dotenv.config();
+const port = process.env.PORT;
+app.use(morgan('dev'));
+app.use(express.json());
 
-const controller = require('../database/controller.js');
+const { controller } = require('../database/controller.js');
 
 app.use(cors());
 app.use(express.static(`${__dirname}/../client/dist`));
@@ -40,21 +46,23 @@ app.get('/reservations/', (req, res) => {
   Time
 */
 // RESERVATION DATA
-
 // create
-app.post('/restaurant/:restaurantId/reservation', controller.reservations.addReservation);
+app.post('/restaurant/:restaurantId/reservations', controller.reservations.addReservation);
+
+// readAvailable
+app.get('/restaurant/:restaurantId/availableReservations', controller.reservations.findReservations);
 
 // read All
 app.get('/restaurant/:restaurantId/allReservations', controller.reservations.getAllReservations);
 
 // read one reservation
-app.get('/reservation/:reservationId', controller.reservations.getOneReservation);
+app.get('/restaurant/:restaurantId/reservations/:reservationId', controller.reservations.getOneReservation);
 
 // update
-app.put('/reservation/:reservationId', controller.reservations.updateReservation);
+app.put('/restaurant/:restaurantId/reservations/:reservationId', controller.reservations.updateReservation);
 
 // delete
-app.delete('/reservation/:reservationId', controller.reservations.deleteReservation);
+app.delete('/restaurant/:restaurantId/reservations/:reservationId', controller.reservations.deleteReservation);
 
 
 // GENERAL RESTAURANT DATA
@@ -63,7 +71,7 @@ app.delete('/reservation/:reservationId', controller.reservations.deleteReservat
 app.post('/restaurant', controller.restaurants.addRestaurant);
 
 // read
-app.get('/restaurant/:restaurantId', controller.restaurants.getRestaurant);
+app.get('/restaurant/:restaurantId', controller.restaurants.getOneRestaurant);
 
 // update
 app.put('/restaurant/:restaurantId', controller.restaurants.updateRestaurant);
