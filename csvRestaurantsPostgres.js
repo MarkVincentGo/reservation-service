@@ -21,11 +21,11 @@ const generateRestaurantName = () => {
 };
 
 
-const write = fs.createWriteStream('./restaurantsTest.csv');
+const write = fs.createWriteStream('./restaurantsTestNEW.csv');
 // write.write('id,name,monday_start,monday_end,tuesday_start,tuesday_end,wednesday_start,wednesday_end,thursday_start,thursday_end,friday_start,friday_end,saturday_start,saturday_end,sunday_start,sunday_end,reservation_allowed,max_number,min_number,reservation_duration,allowed_months_ahead,1_seat_count,2_seat_count,3_seat_count,4_seat_count,5_seat_count,6_seat_count,7_seat_count,8_seat_count,9_seat_count,10_seat_count,11_seat_count,12_seat_count,13_seat_count,14_seat_count,15_seat_count\n', 'utf8');
 write.setMaxListeners(1000);
 
-const reserveWrite = fs.createWriteStream('./reservationsTest.csv', { flags: 'a', emitClose: true });
+const reserveWrite = fs.createWriteStream('./reservationsNEW.csv', { flags: 'a', emitClose: true });
 reserveWrite.setMaxListeners(5000);
 
 function writeTenMillionRestaurants(writer, encoding, callback) {
@@ -83,14 +83,30 @@ function writeTenMillionRestaurants(writer, encoding, callback) {
       const thirteenSeatCount = Math.floor(Math.random() * 2);
       const fourteenSeatCount = Math.floor(Math.random() * 2);
       const fifteenSeatCount = Math.floor(Math.random() * 2);
-      const data = `${id},${name},${mondayStart},${mondayEnd},${tuesdayStart},${tuesdayEnd},${wednesdayStart},${wednesdayEnd},${thursdayStart},${thursdayEnd},${fridayStart},${fridayEnd},${saturdayStart},${saturdayEnd},${sundayStart},${sundayEnd},${reservationAllowed},${maxNumber},${minNumber},${reservationDuration},${allowedMonthsAhead},${oneSeatCount},${twoSeatCount},${threeSeatCount},${fourSeatCount},${fiveSeatCount},${sixSeatCount},${sevenSeatCount},${eightSeatCount},${nineSeatCount},${tenSeatCount},${elevenSeatCount},${twelveSeatCount},${thirteenSeatCount},${fourteenSeatCount},${fifteenSeatCount}\n`;
-
+      const data = `${name},${mondayStart},${mondayEnd},${tuesdayStart},${tuesdayEnd},${wednesdayStart},${wednesdayEnd},${thursdayStart},${thursdayEnd},${fridayStart},${fridayEnd},${saturdayStart},${saturdayEnd},${sundayStart},${sundayEnd},${reservationAllowed},${maxNumber},${minNumber},${reservationDuration},${allowedMonthsAhead},${oneSeatCount},${twoSeatCount},${threeSeatCount},${fourSeatCount},${fiveSeatCount},${sixSeatCount},${sevenSeatCount},${eightSeatCount},${nineSeatCount},${tenSeatCount},${elevenSeatCount},${twelveSeatCount},${thirteenSeatCount},${fourteenSeatCount},${fifteenSeatCount}\n`;
+      const seatCounts = {
+        oneSeatCount,
+        twoSeatCount,
+        threeSeatCount,
+        fourSeatCount,
+        fiveSeatCount,
+        sixSeatCount,
+        sevenSeatCount,
+        eightSeatCount,
+        nineSeatCount,
+        tenSeatCount,
+        elevenSeatCount,
+        twelveSeatCount,
+        thirteenSeatCount,
+        fourteenSeatCount,
+        fifteenSeatCount,
+      }
       if (reservationAllowed) {
         makeOneHundredReservations(reserveWrite, 'utf-8', () => {
           reserveWrite.end();
         },
         // all the arguments passed in to make reservations more accurate.
-        id, weekdayHoursStart, weekdayHoursEnd, maxNumber, minNumber, reservationDuration, allowedMonthsAhead);
+        id, weekdayHoursStart, weekdayHoursEnd, maxNumber, minNumber, reservationDuration, allowedMonthsAhead, seatCounts);
       }
 
       if (i === 0) {
